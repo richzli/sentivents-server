@@ -25,6 +25,6 @@ def emojify_sentences():
         for i in range(len(l)):
             t_prob = prob[i]
             ind_top = top_elements(t_prob, 5)
-            result.append(list(zip(ind_top, (t_prob[ind] for ind in ind_top))))
+            result.append(list(zip(map(int, ind_top), (float(t_prob[ind]) for ind in ind_top))))
     
     return result

@@ -44,6 +44,7 @@ class Server(BaseHTTPRequestHandler):
                 else:
                     response["success"] = False
 
+                print(response["emoji"])
                 self._success()
                 self.wfile.write(bytes(dumps(response), "utf-8"))
             else:
