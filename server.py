@@ -35,16 +35,16 @@ class Server(BaseHTTPRequestHandler):
             if path == "/emote" or path == "/emote/":
                 query = unquote(url.query)
                 qd = dict(q.split("=", 1) for q in query.split("&"))
-                print(query, qd)
 
                 if "sentences" in qd:
                     l = loads(qd["sentences"])
                     if isinstance(l, list):
-                        response["emoji"] = model.emojify_sentences()#[str(x) for x in l])
+                        response["emoji"] = model.emojify_sentences([str(x) for x in l])
+                    else:
+                        response["success"] = False
                 else:
                     response["success"] = False
 
-                print(response["emoji"])
                 self._success()
                 self.wfile.write(bytes(dumps(response), "utf-8"))
             else:

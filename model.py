@@ -1,9 +1,10 @@
 from torchmoji.sentence_tokenizer import SentenceTokenizer
 from torchmoji.model_def import torchmoji_emojis
-from torchmoji.global_variables import PRETRAINED_PATH, VOCAB_PATH
+from torchmoji.global_variables import PRETRAINED_PATH, VOCAB_PATH, EMOJIS
 
 import json
 import numpy as np
+import emoji
 
 def top_elements(array, k):
     ind = np.argpartition(array, -k)[-k:]
@@ -15,8 +16,7 @@ with open(VOCAB_PATH, 'r') as f:
 st = SentenceTokenizer(vocabulary, 300)
 model = torchmoji_emojis(PRETRAINED_PATH)
 
-def emojify_sentences():
-    l = ["You look great today!"]
+def emojify_sentences(l):
     tokenized, _, _ = st.tokenize_sentences(l)
     prob = model(tokenized)
 
@@ -25,6 +25,7 @@ def emojify_sentences():
         for i in range(len(l)):
             t_prob = prob[i]
             ind_top = top_elements(t_prob, 5)
-            result.append(list(zip(map(int, ind_top), (float(t_prob[ind]) for ind in ind_top))))
+            result.append(list([emoji.emojize(EMOJIS[i], use_aliases=True), float(t_prob[i])] for i in ind_top))
     
+    print(result)
     return result
