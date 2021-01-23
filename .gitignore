@@ -1,0 +1,4 @@
+model/pytorch_model.bin
+__pycache__/*
+torchmoji/__pycache__/*
+venv/*
