@@ -27,5 +27,4 @@ def emojify_sentences(l):
             ind_top = top_elements(t_prob, 5)
             result.append(list([emoji.emojize(EMOJIS[i], use_aliases=True), float(t_prob[i])] for i in ind_top))
     
-    print(result)
     return result
